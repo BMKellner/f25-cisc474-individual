@@ -50,3 +50,4 @@ Admin:
   Manage default settings
   Manage roles and permissions 
   Export data (grades and submissions)
+
