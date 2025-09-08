@@ -42,7 +42,6 @@ flowchart TD
   MAT -.-> CO
   ASG -.-> CO
   PPL -.-> CO
-  GB  -.-> CO
 
   %% Modules can open Assignments directly
   MAT --> AD
@@ -77,8 +76,4 @@ flowchart TD
   RV  -.-> D
   GB  -.-> D
   ADM -.-> D
-
-  %% ----- VISUAL EMPHASIS FOR DASHBOARD HUB -----
-  classDef hub fill:#eef2ff,stroke:#3b82f6,stroke-width:3px;
-  class D hub;
 ```
