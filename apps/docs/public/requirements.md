@@ -45,7 +45,9 @@
 - View assignments (instructions, grades, points, and rubrics)  
 - File submissions, link, textbox file  
 - Receive grades and feedback  
-- Dashboard with upcoming deadlines (calendar)  
+- Dashboard with upcoming deadlines (calendar)
+- submit assignment for peer review
+- review peer work with structured rubric 
 
 ### Instructor
 - Create/manage courses  
@@ -56,7 +58,9 @@
   - Submission types  
 - View submissions  
 - Leave annotations  
-- View analytics (submission time, grade)  
+- View analytics (submission time, grade)
+- configure peer review settings
+- view peer review alongside grades 
 
 ### Admin
 - Manage default settings  
