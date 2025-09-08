@@ -8,6 +8,7 @@
 ---
 
 ## Non-Functional Requirements
+- Responsive
 - Secure  
 - Role based access control  
 - Accountability (submissions are not editable)  
