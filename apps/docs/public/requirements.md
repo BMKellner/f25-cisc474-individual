@@ -8,8 +8,6 @@
 ---
 
 ## Non-Functional Requirements
-- Responsiveness  
-- Fast (<1s) navigations  
 - Secure  
 - Role based access control  
 - Accountability (submissions are not editable)  
