@@ -2,7 +2,7 @@
 flowchart TD
   %% ====== GLOBAL ======
   subgraph G[Global]
-    L[Landing /] --> A[Auth]
+    L[Landing] --> A[Auth]
     A --> D[Dashboard]
   end
   D --> C[Courses]
