@@ -19,7 +19,6 @@
 ## User Stories
 
 ### Student (As a student, I…)
-- Can join a course  
 - Can filter assignments based on due date and course  
 - Can view grader comments to better understand what I need to fix  
 - Can request a regrade with justification  
@@ -32,7 +31,8 @@
 
 ### Admin (As an admin, I…)
 - Can set roles and settings  
-- Can export all course grades  
+- Can export all course grades
+- Can create and assign courses 
 
 ---
 
