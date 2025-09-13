@@ -186,3 +186,36 @@ button.secondary {
     filter: invert();
   }
 }
+
+.title {
+  font-size: 3rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.authCard {
+  background: var(--gray-alpha-100);
+  border: 1px solid var(--gray-alpha-200);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 260px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.authButton {
+  width: 100%;
+}
+
+.forgot {
+  font-size: 0.85rem;
+  color: #888;
+  text-decoration: underline;
+  margin-top: 0.25rem;
+  text-align: center;
+  display: block;
+}
