@@ -1,0 +1,6 @@
+[
+  { "assignmentTitle": "HW1: Version Control", "title": "Git Basics",            "points": 10 },
+  { "assignmentTitle": "HW1: Version Control", "title": "Branching",             "points": 10 },
+  { "assignmentTitle": "HW2: Testing Basics",  "title": "Unit vs Integration",   "points": 15 },
+  { "assignmentTitle": "HW2: Testing Basics",  "title": "Write Jest Test",       "points": 15 }
+]

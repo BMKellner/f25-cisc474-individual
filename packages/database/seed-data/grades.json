@@ -1,0 +1,15 @@
+[
+  {
+    "email": "alice@lms.dev",
+    "assignmentTitle": "HW1: Version Control",
+    "problemTitle": "Git Basics",
+    "pointsEarned": 9,
+    "pointsMax": 10
+  },
+  {
+    "email": "charlie@lms.dev",
+    "assignmentTitle": "HW2: Testing Basics",
+    "pointsEarned": 25,
+    "pointsMax": 30
+  }
+]

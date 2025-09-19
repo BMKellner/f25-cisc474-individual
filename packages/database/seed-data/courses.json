@@ -1,0 +1,4 @@
+[
+  { "code": "CISC-474-F25", "title": "Software Engineering", "description": "SE fundamentals" },
+  { "code": "CISC-275-F25", "title": "Intro to Databases",   "description": "Relational modeling & SQL" }
+]

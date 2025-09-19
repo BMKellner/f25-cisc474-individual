@@ -1,0 +1,8 @@
+[
+  { "name": "Prof Ada",   "email": "inst@lms.dev" },
+  { "name": "TA Turing",  "email": "ta@lms.dev" },
+  { "name": "Alice",      "email": "alice@lms.dev" },
+  { "name": "Bob",        "email": "bob@lms.dev" },
+  { "name": "Charlie",    "email": "charlie@lms.dev" },
+  { "name": "Dana",       "email": "dana@lms.dev" }
+]

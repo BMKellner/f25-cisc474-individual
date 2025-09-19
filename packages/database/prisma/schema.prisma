@@ -1,5 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// learn more: https://pris.ly/d/prisma-schema
 
 datasource db {
   provider  = "postgresql"
@@ -12,9 +11,119 @@ generator client {
   output   = "../generated/client"
 }
 
+enum CourseRole {
+  INSTRUCTOR
+  TA
+  STUDENT
+}
+
 model User {
-  id            String    @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?       @unique
   emailVerified DateTime?
+  createdAt     DateTime      @default(now())
+
+  enrollments   Enrollment[]
+  submissions   Submission[]
+  @@index([createdAt])
+}
+
+model Course {
+  id          String     @id @default(cuid())
+  code        String     @unique
+  title       String
+  description String?
+  createdAt   DateTime   @default(now())
+
+  sections    Section[]
+}
+
+model Section {
+  id        String    @id @default(cuid())
+  courseId  String
+  code      String    // e.g., "001", "Honors"
+  createdAt DateTime  @default(now())
+
+  course      Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  enrollments Enrollment[]
+  assignments Assignment[]
+
+  @@unique([courseId, code])
+  @@index([courseId])
+}
+
+model Enrollment {
+  id        String     @id @default(cuid())
+  userId    String
+  sectionId String
+  role      CourseRole @default(STUDENT)
+
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  section  Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, sectionId])
+  @@index([sectionId, role])
+}
+
+model Assignment {
+  id        String    @id @default(cuid())
+  sectionId String
+  title     String
+  dueAt     DateTime?
+
+  section     Section     @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  problems    Problem[]
+  submissions Submission[]
+
+  @@index([sectionId, dueAt])
+}
+
+model Problem {
+  id           String     @id @default(cuid())
+  assignmentId String
+  title        String
+  points       Int        @default(10)
+
+  assignment   Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  submissions  Submission[]
+
+  @@index([assignmentId])
+}
+
+model Submission {
+  id           String     @id @default(cuid())
+  userId       String
+  assignmentId String
+  problemId    String?
+  content      String
+  createdAt    DateTime   @default(now())
+
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  assignment   Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  problem      Problem?   @relation(fields: [problemId], references: [id], onDelete: SetNull)
+  grade        Grade?
+  artifacts    SubmissionArtifact[]
+
+  @@index([userId, assignmentId])
+}
+
+model SubmissionArtifact {
+  id           String     @id @default(cuid())
+  submissionId String
+  label        String
+  url          String
+
+  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  @@index([submissionId])
+}
+
+model Grade {
+  id            String     @id @default(cuid())
+  submissionId  String     @unique
+  pointsEarned  Int
+  pointsMax     Int
+  gradedAt      DateTime   @default(now())
+
+  submission    Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
 }

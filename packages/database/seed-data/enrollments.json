@@ -1,0 +1,13 @@
+[
+  { "email": "inst@lms.dev", "courseCode": "CISC-474-F25", "sectionCode": "A", "role": "INSTRUCTOR" },
+  { "email": "ta@lms.dev",   "courseCode": "CISC-474-F25", "sectionCode": "A", "role": "TA" },
+
+  { "email": "alice@lms.dev","courseCode": "CISC-474-F25", "sectionCode": "A", "role": "STUDENT" },
+  { "email": "bob@lms.dev",  "courseCode": "CISC-474-F25", "sectionCode": "A", "role": "STUDENT" },
+  { "email": "charlie@lms.dev","courseCode": "CISC-474-F25","sectionCode": "A","role": "STUDENT" },
+
+  { "email": "dana@lms.dev", "courseCode": "CISC-474-F25", "sectionCode": "B", "role": "STUDENT" },
+
+  { "email": "alice@lms.dev","courseCode": "CISC-275-F25", "sectionCode": "A", "role": "STUDENT" },
+  { "email": "bob@lms.dev",  "courseCode": "CISC-275-F25", "sectionCode": "A", "role": "STUDENT" }
+]

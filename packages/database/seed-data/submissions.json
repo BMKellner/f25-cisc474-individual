@@ -1,0 +1,19 @@
+[
+  {
+    "email": "alice@lms.dev",
+    "assignmentTitle": "HW1: Version Control",
+    "problemTitle": "Git Basics",
+    "content": "git init && git commit -m 'init'"
+  },
+  {
+    "email": "bob@lms.dev",
+    "assignmentTitle": "HW1: Version Control",
+    "problemTitle": "Branching",
+    "content": "git checkout -b feature/login"
+  },
+  {
+    "email": "charlie@lms.dev",
+    "assignmentTitle": "HW2: Testing Basics",
+    "content": "High-level notes about unit vs integration testing"
+  }
+]
