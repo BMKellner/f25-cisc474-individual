@@ -1,9 +1,53 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <div>Hello "/"!</div>;
+  return (
+    <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
+      {/* Navigation */}
+      <nav className="glass-effect border-b border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <h1 className="text-2xl font-bold text-gradient">EduFlow</h1>
+            </div>
+                <div className="flex items-center space-x-4">
+                  <Link to="/dashboard" className="nav-link">
+                    Dashboard
+                  </Link>
+                  <Link to="/api-data" className="nav-link">
+                    API Demo
+                  </Link>
+                  <Link to="/admin" className="nav-link">
+                    Admin
+                  </Link>
+                </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <main className="flex flex-col items-center justify-center min-h-screen px-4">
+        <div className="text-center max-w-4xl mx-auto animate-fade-in">
+          <h1 className="text-6xl md:text-7xl font-bold mb-6">
+            <span className="text-gradient">EduFlow</span>
+          </h1>
+          <p className="text-xl text-gray-300 mb-12">
+            Modern learning platform
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link to="/dashboard">
+              <button className="btn-primary text-lg px-8 py-4">
+                Get Started
+              </button>
+            </Link>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
 }
