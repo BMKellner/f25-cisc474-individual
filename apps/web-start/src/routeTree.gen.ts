@@ -15,6 +15,10 @@ import { Route as AssignmentsRouteImport } from './routes/assignments'
 import { Route as ApiDataRouteImport } from './routes/api-data'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as UsersIndexRouteImport } from './routes/users/index'
+import { Route as UsersCreateRouteImport } from './routes/users/create'
+import { Route as UsersUserIdEditRouteImport } from './routes/users/$userId/edit'
+import { Route as UsersUserIdDeleteRouteImport } from './routes/users/$userId/delete'
 
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
@@ -46,6 +50,26 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UsersIndexRoute = UsersIndexRouteImport.update({
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UsersCreateRoute = UsersCreateRouteImport.update({
+  id: '/users/create',
+  path: '/users/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UsersUserIdEditRoute = UsersUserIdEditRouteImport.update({
+  id: '/users/$userId/edit',
+  path: '/users/$userId/edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UsersUserIdDeleteRoute = UsersUserIdDeleteRouteImport.update({
+  id: '/users/$userId/delete',
+  path: '/users/$userId/delete',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +78,10 @@ export interface FileRoutesByFullPath {
   '/assignments': typeof AssignmentsRoute
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
+  '/users/create': typeof UsersCreateRoute
+  '/users': typeof UsersIndexRoute
+  '/users/$userId/delete': typeof UsersUserIdDeleteRoute
+  '/users/$userId/edit': typeof UsersUserIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +90,10 @@ export interface FileRoutesByTo {
   '/assignments': typeof AssignmentsRoute
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
+  '/users/create': typeof UsersCreateRoute
+  '/users': typeof UsersIndexRoute
+  '/users/$userId/delete': typeof UsersUserIdDeleteRoute
+  '/users/$userId/edit': typeof UsersUserIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +103,10 @@ export interface FileRoutesById {
   '/assignments': typeof AssignmentsRoute
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
+  '/users/create': typeof UsersCreateRoute
+  '/users/': typeof UsersIndexRoute
+  '/users/$userId/delete': typeof UsersUserIdDeleteRoute
+  '/users/$userId/edit': typeof UsersUserIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,8 +117,22 @@ export interface FileRouteTypes {
     | '/assignments'
     | '/courses'
     | '/dashboard'
+    | '/users/create'
+    | '/users'
+    | '/users/$userId/delete'
+    | '/users/$userId/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/api-data' | '/assignments' | '/courses' | '/dashboard'
+  to:
+    | '/'
+    | '/admin'
+    | '/api-data'
+    | '/assignments'
+    | '/courses'
+    | '/dashboard'
+    | '/users/create'
+    | '/users'
+    | '/users/$userId/delete'
+    | '/users/$userId/edit'
   id:
     | '__root__'
     | '/'
@@ -91,6 +141,10 @@ export interface FileRouteTypes {
     | '/assignments'
     | '/courses'
     | '/dashboard'
+    | '/users/create'
+    | '/users/'
+    | '/users/$userId/delete'
+    | '/users/$userId/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -100,6 +154,10 @@ export interface RootRouteChildren {
   AssignmentsRoute: typeof AssignmentsRoute
   CoursesRoute: typeof CoursesRoute
   DashboardRoute: typeof DashboardRoute
+  UsersCreateRoute: typeof UsersCreateRoute
+  UsersIndexRoute: typeof UsersIndexRoute
+  UsersUserIdDeleteRoute: typeof UsersUserIdDeleteRoute
+  UsersUserIdEditRoute: typeof UsersUserIdEditRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -146,6 +204,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/users/': {
+      id: '/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/users/create': {
+      id: '/users/create'
+      path: '/users/create'
+      fullPath: '/users/create'
+      preLoaderRoute: typeof UsersCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/users/$userId/edit': {
+      id: '/users/$userId/edit'
+      path: '/users/$userId/edit'
+      fullPath: '/users/$userId/edit'
+      preLoaderRoute: typeof UsersUserIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/users/$userId/delete': {
+      id: '/users/$userId/delete'
+      path: '/users/$userId/delete'
+      fullPath: '/users/$userId/delete'
+      preLoaderRoute: typeof UsersUserIdDeleteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -156,6 +242,10 @@ const rootRouteChildren: RootRouteChildren = {
   AssignmentsRoute: AssignmentsRoute,
   CoursesRoute: CoursesRoute,
   DashboardRoute: DashboardRoute,
+  UsersCreateRoute: UsersCreateRoute,
+  UsersIndexRoute: UsersIndexRoute,
+  UsersUserIdDeleteRoute: UsersUserIdDeleteRoute,
+  UsersUserIdEditRoute: UsersUserIdEditRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
