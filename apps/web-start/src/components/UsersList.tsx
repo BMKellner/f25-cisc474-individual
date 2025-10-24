@@ -1,16 +1,39 @@
 import { fetchUsers } from '../lib/api';
 import { useState, useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import { waitForAuthReady } from '../lib/auth-ready';
 
 export function UsersList() {
+  const { isAuthenticated, isLoading: authLoading } = useAuth0();
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Don't fetch until Auth0 is done loading AND user is authenticated
+    if (authLoading) {
+      console.log('[UsersList] Waiting for Auth0 to finish loading...');
+      return;
+    }
+
+    if (!isAuthenticated) {
+      console.log('[UsersList] User not authenticated, skipping fetch');
+      setLoading(false);
+      setError('Please log in to view users');
+      return;
+    }
+
+    console.log('[UsersList] User authenticated, waiting for token getter...');
+    
     const loadUsers = async () => {
       try {
         setLoading(true);
         setError(null);
+        
+        // Wait for token getter to be ready
+        await waitForAuthReady();
+        console.log('[UsersList] Token getter ready, fetching users...');
+        
         const data = await fetchUsers();
         setUsers(Array.isArray(data) ? data : []);
       } catch (err) {
@@ -22,7 +45,31 @@ export function UsersList() {
     };
 
     loadUsers();
-  }, []);
+  }, [isAuthenticated, authLoading]);
+
+  if (authLoading) {
+    return (
+      <div className="card">
+        <h3 className="text-lg font-semibold mb-4">Users from API</h3>
+        <div className="flex items-center justify-center p-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500"></div>
+          <span className="ml-3 text-gray-400">Checking authentication...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="card">
+        <h3 className="text-lg font-semibold mb-4">Users from API</h3>
+        <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+          <p className="text-yellow-400">🔒 Authentication Required</p>
+          <p className="text-sm text-gray-400 mt-2">Please log in to view users</p>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
@@ -30,7 +77,7 @@ export function UsersList() {
         <h3 className="text-lg font-semibold mb-4">Users from API</h3>
         <div className="flex items-center justify-center p-8">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500"></div>
-          <span className="ml-3 text-gray-400">Loading...</span>
+          <span className="ml-3 text-gray-400">Loading users...</span>
         </div>
       </div>
     );

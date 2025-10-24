@@ -29,7 +29,6 @@ function RouteComponent() {
               <h1 className="text-2xl font-bold text-gradient">EduFlow</h1>
             </div>
                 <div className="flex items-center space-x-4">
-                  <Link to="/" className="nav-link">Home</Link>
                   <Link to="/courses" className="nav-link">Courses</Link>
                   <Link to="/api-data" className="nav-link">API Demo</Link>
                   <Link to="/admin" className="nav-link">Admin</Link>

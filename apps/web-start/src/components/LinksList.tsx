@@ -1,16 +1,39 @@
 import { fetchLinks } from '../lib/api';
 import { useState, useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import { waitForAuthReady } from '../lib/auth-ready';
 
 export function LinksList() {
+  const { isAuthenticated, isLoading: authLoading } = useAuth0();
   const [links, setLinks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Don't fetch until Auth0 is done loading AND user is authenticated
+    if (authLoading) {
+      console.log('[LinksList] Waiting for Auth0 to finish loading...');
+      return;
+    }
+
+    if (!isAuthenticated) {
+      console.log('[LinksList] User not authenticated, skipping fetch');
+      setLoading(false);
+      setError('Please log in to view links');
+      return;
+    }
+
+    console.log('[LinksList] User authenticated, waiting for token getter...');
+    
     const loadLinks = async () => {
       try {
         setLoading(true);
         setError(null);
+        
+        // Wait for token getter to be ready
+        await waitForAuthReady();
+        console.log('[LinksList] Token getter ready, fetching links...');
+        
         const data = await fetchLinks();
         setLinks(Array.isArray(data) ? data : []);
       } catch (err) {
@@ -22,7 +45,7 @@ export function LinksList() {
     };
 
     loadLinks();
-  }, []);
+  }, [isAuthenticated, authLoading]);
 
   if (loading) {
     return (

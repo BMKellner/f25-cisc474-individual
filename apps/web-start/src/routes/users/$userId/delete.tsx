@@ -1,6 +1,7 @@
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { backendFetcher, mutateBackend } from '../../../integrations/fetcher';
+import { Link, createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useAuth0 } from '@auth0/auth0-react';
+import { deleteUser, fetchUser } from '../../../lib/api';
 
 interface UserOut {
   id: string;
@@ -18,14 +19,16 @@ function DeleteUserPage() {
   const { userId } = Route.useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { isAuthenticated, isLoading: authLoading } = useAuth0();
 
   const { data: user, isLoading, error } = useQuery<UserOut>({
     queryKey: ['users', userId],
-    queryFn: backendFetcher<UserOut>(`/users/${userId}`),
+    queryFn: () => fetchUser(userId),
+    enabled: isAuthenticated && !authLoading,
   });
 
   const deleteMutation = useMutation({
-    mutationFn: () => mutateBackend(`/users/${userId}`, 'DELETE'),
+    mutationFn: () => deleteUser(userId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
       navigate({ to: '/users' });

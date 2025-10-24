@@ -1,20 +1,12 @@
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
+import { type FormEvent, useState } from 'react';
+import { Link, createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState, FormEvent } from 'react';
-import { mutateBackend } from '../../integrations/fetcher';
+import { createUser } from '../../lib/api';
 
 interface UserCreateIn {
   name: string;
   email: string;
   emailVerified?: boolean;
-}
-
-interface UserOut {
-  id: string;
-  name: string | null;
-  email: string | null;
-  emailVerified: Date | null;
-  createdAt: Date;
 }
 
 export const Route = createFileRoute('/users/create')({
@@ -30,8 +22,7 @@ function CreateUserPage() {
   const [emailVerified, setEmailVerified] = useState(false);
 
   const createMutation = useMutation({
-    mutationFn: (data: UserCreateIn) =>
-      mutateBackend<UserCreateIn, UserOut>('/users', 'POST', data),
+    mutationFn: (data: UserCreateIn) => createUser(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
       navigate({ to: '/users' });

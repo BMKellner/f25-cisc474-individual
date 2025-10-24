@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
-import { backendFetcher } from '../../integrations/fetcher';
 
 interface UserOut {
   id: string;
@@ -21,7 +20,12 @@ function UsersPage() {
     error,
   } = useQuery<UserOut[]>({
     queryKey: ['users'],
-    queryFn: backendFetcher<UserOut[]>('/users'),
+    queryFn: async () => {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'}/users`);
+      if (!response.ok) throw new Error('Failed to fetch users');
+      return response.json();
+    },
+    // No auth required - users endpoint is public
   });
 
   return (
@@ -96,10 +100,10 @@ function UsersPage() {
                     </td>
                     <td className="py-3 px-4 text-right">
                       <div className="flex justify-end gap-2">
-                        <Link to={`/users/${user.id}/edit`}>
+                        <Link to="/users/$userId/edit" params={{ userId: user.id }}>
                           <button className="btn-secondary text-sm">Edit</button>
                         </Link>
-                        <Link to={`/users/${user.id}/delete`}>
+                        <Link to="/users/$userId/delete" params={{ userId: user.id }}>
                           <button className="text-sm px-3 py-1 rounded bg-red-600 hover:bg-red-700">Delete</button>
                         </Link>
                       </div>

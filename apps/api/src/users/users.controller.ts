@@ -8,8 +8,12 @@ import {
   Body,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
+import { CurrentUser } from '../auth/current-user.decorator';
+import { JwtUser } from '../auth/jwt.strategy';
 
 interface UserOut {
   id: string;
@@ -34,6 +38,12 @@ interface UserUpdateIn {
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Get('me')
+  @UseGuards(AuthGuard('jwt'))
+  async getCurrentUser(@CurrentUser() user: JwtUser): Promise<JwtUser> {
+    return user;
+  }
 
   @Get()
   async findAll(): Promise<UserOut[]> {

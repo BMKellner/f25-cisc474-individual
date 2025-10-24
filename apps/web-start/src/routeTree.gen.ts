@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as HomeRouteImport } from './routes/home'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as AssignmentsRouteImport } from './routes/assignments'
@@ -20,6 +21,11 @@ import { Route as UsersCreateRouteImport } from './routes/users/create'
 import { Route as UsersUserIdEditRouteImport } from './routes/users/$userId/edit'
 import { Route as UsersUserIdDeleteRouteImport } from './routes/users/$userId/delete'
 
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/assignments': typeof AssignmentsRoute
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
+  '/home': typeof HomeRoute
   '/users/create': typeof UsersCreateRoute
   '/users': typeof UsersIndexRoute
   '/users/$userId/delete': typeof UsersUserIdDeleteRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/assignments': typeof AssignmentsRoute
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
+  '/home': typeof HomeRoute
   '/users/create': typeof UsersCreateRoute
   '/users': typeof UsersIndexRoute
   '/users/$userId/delete': typeof UsersUserIdDeleteRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/assignments': typeof AssignmentsRoute
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
+  '/home': typeof HomeRoute
   '/users/create': typeof UsersCreateRoute
   '/users/': typeof UsersIndexRoute
   '/users/$userId/delete': typeof UsersUserIdDeleteRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/assignments'
     | '/courses'
     | '/dashboard'
+    | '/home'
     | '/users/create'
     | '/users'
     | '/users/$userId/delete'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/assignments'
     | '/courses'
     | '/dashboard'
+    | '/home'
     | '/users/create'
     | '/users'
     | '/users/$userId/delete'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/assignments'
     | '/courses'
     | '/dashboard'
+    | '/home'
     | '/users/create'
     | '/users/'
     | '/users/$userId/delete'
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   AssignmentsRoute: typeof AssignmentsRoute
   CoursesRoute: typeof CoursesRoute
   DashboardRoute: typeof DashboardRoute
+  HomeRoute: typeof HomeRoute
   UsersCreateRoute: typeof UsersCreateRoute
   UsersIndexRoute: typeof UsersIndexRoute
   UsersUserIdDeleteRoute: typeof UsersUserIdDeleteRoute
@@ -162,6 +175,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -242,6 +262,7 @@ const rootRouteChildren: RootRouteChildren = {
   AssignmentsRoute: AssignmentsRoute,
   CoursesRoute: CoursesRoute,
   DashboardRoute: DashboardRoute,
+  HomeRoute: HomeRoute,
   UsersCreateRoute: UsersCreateRoute,
   UsersIndexRoute: UsersIndexRoute,
   UsersUserIdDeleteRoute: UsersUserIdDeleteRoute,

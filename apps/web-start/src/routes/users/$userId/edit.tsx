@@ -1,7 +1,8 @@
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState, FormEvent, useEffect } from 'react';
-import { backendFetcher, mutateBackend } from '../../../integrations/fetcher';
+import { type FormEvent, useEffect, useState } from 'react';
+import { Link, createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useAuth0 } from '@auth0/auth0-react';
+import { fetchUser, updateUser } from '../../../lib/api';
 
 interface UserOut {
   id: string;
@@ -25,6 +26,7 @@ function EditUserPage() {
   const { userId } = Route.useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { isAuthenticated, isLoading: authLoading } = useAuth0();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -32,7 +34,8 @@ function EditUserPage() {
 
   const { data: user, isLoading, error } = useQuery<UserOut>({
     queryKey: ['users', userId],
-    queryFn: backendFetcher<UserOut>(`/users/${userId}`),
+    queryFn: () => fetchUser(userId),
+    enabled: isAuthenticated && !authLoading,
   });
 
   useEffect(() => {
@@ -44,8 +47,7 @@ function EditUserPage() {
   }, [user]);
 
   const updateMutation = useMutation({
-    mutationFn: (data: UserUpdateIn) =>
-      mutateBackend<UserUpdateIn, UserOut>(`/users/${userId}`, 'PATCH', data),
+    mutationFn: (data: UserUpdateIn) => updateUser(userId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
       queryClient.invalidateQueries({ queryKey: ['users', userId] });

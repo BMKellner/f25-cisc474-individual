@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/admin')({
   component: RouteComponent,
@@ -28,7 +28,6 @@ function RouteComponent() {
               <h1 className="text-2xl font-bold text-gradient">EduFlow</h1>
             </div>
                 <div className="flex items-center space-x-4">
-                  <a href="/" className="nav-link">Home</a>
                   <a href="/dashboard" className="nav-link">Dashboard</a>
                   <a href="/courses" className="nav-link">Courses</a>
                   <a href="/api-data" className="nav-link">API Demo</a>
@@ -101,9 +100,9 @@ function RouteComponent() {
             <div className="card">
               <h3 className="text-lg font-semibold mb-4">Actions</h3>
               <div className="space-y-3">
-                <button className="btn-secondary w-full">
+                <Link to="/users" className="btn-secondary w-full block text-center">
                   Manage Users
-                </button>
+                </Link>
                 <button className="btn-secondary w-full">
                   Analytics
                 </button>
